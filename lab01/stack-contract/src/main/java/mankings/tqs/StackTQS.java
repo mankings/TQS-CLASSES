@@ -1,19 +1,19 @@
 package mankings.tqs;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-public class StackTQS {
+public class StackTQS <T> {
     
-    private ArrayList<Object> stack;
+    private LinkedList<T> stack;
     private Integer bound = null;
 
     public StackTQS() {
-        this.stack = new ArrayList<Object>();
+        this.stack = new LinkedList<T>();
     }
 
     public StackTQS(Integer bound) {
-        this.stack = new ArrayList<Object>();
+        this.stack = new LinkedList<T>();
         this.bound = bound;
     }
 
@@ -21,24 +21,24 @@ public class StackTQS {
         return bound;
     }
 
-    public void push(Object x) {
+    public void push(T x) {
         this.stack.add(x);
         if (this.bound != null && this.stack.size() > this.bound) {
             throw new IllegalStateException();
         }
     }
 
-    public Object pop() {
+    public T pop() {
         if (this.stack.isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            Object last = this.stack.get( this.stack.size() - 1 );
+            T last = this.stack.get( this.stack.size() - 1 );
             this.stack.remove( this.stack.size() - 1 );
             return last;
         }
     }
 
-    public Object peek() {
+    public T peek() {
         if (this.stack.isEmpty()) {
             throw new NoSuchElementException();
         } else {
