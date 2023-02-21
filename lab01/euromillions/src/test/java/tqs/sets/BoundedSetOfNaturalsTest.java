@@ -34,6 +34,7 @@ class BoundedSetOfNaturalsTest {
         setA = setB = setC = setD = setE = null;
     }
 
+    @DisplayName("tests adding elements to sets")
     @Test
     public void testAddElement() {
         // add element to 
@@ -46,6 +47,7 @@ class BoundedSetOfNaturalsTest {
         assertThrows(IllegalArgumentException.class, () -> setC.add(50), "add: adding duplicate number does not throw IllegalArgumentException");
     }
 
+    @DisplayName("tests adding to a set from a bad array")
     @Test
     public void testAddFromBadArray() {
         int[] elems = new int[]{10, -20, -30};
@@ -53,12 +55,14 @@ class BoundedSetOfNaturalsTest {
         assertThrows(IllegalArgumentException.class, () -> setA.add(elems));
     }
 
+    @DisplayName("tests if contains works")
     @Test
     public void testContains() {
         assertTrue(setB.contains(20));
         assertFalse(setC.contains(10));
     }
 
+    @DisplayName("tests if intersects works")
     @Test
     public void testIntersects() {
         assertFalse(setB.intersects(setC));
