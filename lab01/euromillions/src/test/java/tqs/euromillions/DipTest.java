@@ -7,7 +7,6 @@ package tqs.euromillions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
-import tqs.euromillions.Dip;
 
 /**
  * @author ico0
