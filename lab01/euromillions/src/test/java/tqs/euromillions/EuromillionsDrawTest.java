@@ -3,9 +3,6 @@ package tqs.euromillions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
-import tqs.euromillions.CuponEuromillions;
-import tqs.euromillions.Dip;
-import tqs.euromillions.EuromillionsDraw;
 
 public class EuromillionsDrawTest {
 
