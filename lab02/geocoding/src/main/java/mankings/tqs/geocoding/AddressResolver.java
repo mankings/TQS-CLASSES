@@ -1,4 +1,4 @@
-package mankings.tqs;
+package mankings.tqs.geocoding;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,6 +14,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
+
+import mankings.tqs.connection.ISimpleHttpClient;
 
 /**
  *

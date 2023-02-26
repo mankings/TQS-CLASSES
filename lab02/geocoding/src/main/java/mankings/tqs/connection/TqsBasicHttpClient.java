@@ -1,4 +1,4 @@
-package mankings.tqs;
+package mankings.tqs.connection;
 
 public class TqsBasicHttpClient implements ISimpleHttpClient {
     @Override

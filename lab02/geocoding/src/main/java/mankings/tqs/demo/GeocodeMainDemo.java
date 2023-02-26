@@ -1,9 +1,13 @@
 
-package mankings.tqs;
+package mankings.tqs.demo;
 
 import org.apache.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import mankings.tqs.connection.TqsBasicHttpClient;
+import mankings.tqs.geocoding.Address;
+import mankings.tqs.geocoding.AddressResolver;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;

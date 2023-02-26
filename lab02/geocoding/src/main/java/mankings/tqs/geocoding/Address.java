@@ -1,4 +1,4 @@
-package mankings.tqs;
+package mankings.tqs.geocoding;
 
 public class Address {
     private String road;
