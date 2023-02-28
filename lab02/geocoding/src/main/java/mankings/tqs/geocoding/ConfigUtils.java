@@ -1,4 +1,4 @@
-package mankings.tqs;
+package mankings.tqs.geocoding;
 
 import java.io.IOException;
 import java.io.InputStream;

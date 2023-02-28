@@ -1,6 +1,5 @@
 package mankings.tqs.geocoding;
 
-import mankings.tqs.*;
 import mankings.tqs.connection.ISimpleHttpClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
