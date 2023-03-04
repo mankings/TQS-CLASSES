@@ -23,7 +23,7 @@ public class AddressResolverIT {
     }
 
     @Test
-    public void testFindAddressForLocation() throws ParseException, IOException, URISyntaxException {
+    public void findAddressForLocationTest() throws ParseException, IOException, URISyntaxException {
         
         double lat = 40.487709;
         double lon = -8.403229;
@@ -35,7 +35,7 @@ public class AddressResolverIT {
     }
 
     @Test
-    public void testFindAddressForLocationBadCoordinates() throws ParseException, IOException, URISyntaxException {
+    public void findAddressForLocationBadCoordinatesTest() throws ParseException, IOException, URISyntaxException {
 
         double lat = 420;
         double lon = -420;

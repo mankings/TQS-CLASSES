@@ -31,7 +31,7 @@ public class AdressResolverTest {
     private String response = "{\"info\":{\"statuscode\":0,\"copyright\":{\"text\":\"© 2022 MapQuest, Inc.\",\"imageUrl\":\"http://api.mqcdn.com/res/mqlogo.gif\",\"imageAltText\":\"© 2022 MapQuest, Inc.\"},\"messages\":[]},\"options\":{\"maxResults\":1,\"ignoreLatLngInput\":false},\"results\":[{\"providedLocation\":{\"latLng\":{\"lat\":40.487709,\"lng\":-8.403229}},\"locations\":[{\"street\":\"Rua João de Deus Cristo\",\"adminArea6\":\"Candieira\",\"adminArea6Type\":\"Neighborhood\",\"adminArea5\":\"Anadia\",\"adminArea5Type\":\"City\",\"adminArea4\":\"Aveiro\",\"adminArea4Type\":\"County\",\"adminArea3\":\"\",\"adminArea3Type\":\"State\",\"adminArea1\":\"PT\",\"adminArea1Type\":\"Country\",\"postalCode\":\"3780-426\",\"geocodeQualityCode\":\"B1AAA\",\"geocodeQuality\":\"STREET\",\"dragPoint\":false,\"sideOfStreet\":\"L\",\"linkId\":\"0\",\"unknownInput\":\"\",\"type\":\"s\",\"latLng\":{\"lat\":40.48786,\"lng\":-8.40321},\"displayLatLng\":{\"lat\":40.48786,\"lng\":-8.40321},\"mapUrl\":\"\"}]}]}";
 
     @Test
-    public void testFindAddressForLocation() throws ParseException, IOException, URISyntaxException {
+    public void findAddressForLocationTest() throws ParseException, IOException, URISyntaxException {
         
         when(httpClient.doHttpGet(anyString())).thenReturn(response);
         
@@ -44,7 +44,7 @@ public class AdressResolverTest {
     }
 
     @Test
-    public void testFindAddressForLocationBadCoordinates() throws ParseException, IOException, URISyntaxException {
+    public void findAddressForLocationBadCoordinatesTest() throws ParseException, IOException, URISyntaxException {
         when(httpClient.doHttpGet(anyString())).thenReturn(response);
 
         double lat = 420;
