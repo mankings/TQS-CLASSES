@@ -39,7 +39,7 @@ class AddressResolverTest {
         // Service to Mock - HttpClient
 
         when(httpClient.doHttpGet(anyString())).thenReturn(apiResponse);
-        Optional<Address> result = resolver.findAddressForLocation(40.633116,-8.658784);
+        Optional<Address> result = resolver.findAddressForLocation(40.487714971980154, -8.403300261161956);
 
         Address expected = new Address( "Rua João de Deus Cristo", "Anadia", "", "3780-426", null);
 
@@ -48,7 +48,7 @@ class AddressResolverTest {
     }
 
     @Test
-    public void whenBadCoordidates_thenIllegalArgumentException() throws IOException, URISyntaxException, ParseException {
+    public void whenBadCoordidates_throwIllegalArgumentException() throws IOException, URISyntaxException, ParseException {
         assertThrows(IllegalArgumentException.class, () -> resolver.findAddressForLocation(-420, 420));
     }
 }

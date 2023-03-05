@@ -20,8 +20,7 @@ public class TqsBasicHttpClient implements ISimpleHttpClient {
             HttpEntity entity = response.getEntity();
             return EntityUtils.toString(entity);
         } finally {
-            if (response != null)
-                response.close();
+            if (response != null) response.close();
         }
     }
 

@@ -31,6 +31,10 @@ public class AddressResolver {
     public Optional<Address> findAddressForLocation(double latitude, double longitude)
             throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
 
+        if (latitude > 90 || latitude < -90 || longitude > 180 || longitude < -180) {
+            throw new IllegalArgumentException();
+        }
+
         String apiKey = ConfigUtils.getPropertyFromConfig("mapquest_key");
 
         URIBuilder uriBuilder = new URIBuilder(MAPQUESTAPI_GEOCODING);
@@ -38,12 +42,10 @@ public class AddressResolver {
         uriBuilder.addParameter("location",
                 (new Formatter()).format(Locale.US, "%.6f,%.6f", latitude, longitude).toString());
 
-        String apiResponse = this.httpClient.doHttpGet(uriBuilder.build().toString());
+        String uri = uriBuilder.build().toString();
+        log.debug(uri);
+        String apiResponse = this.httpClient.doHttpGet(uri);
         log.debug("remote response: ", apiResponse);
-
-        if ( latitude > 90 || latitude < -90 || longitude > 180 || longitude < -180 ) {
-            throw new IllegalArgumentException();
-        }
 
         // get root object from JSON
         JSONObject obj = (JSONObject) new JSONParser().parse(apiResponse);
