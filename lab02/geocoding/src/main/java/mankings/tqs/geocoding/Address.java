@@ -1,23 +1,76 @@
 package mankings.tqs.geocoding;
 
+import java.util.Objects;
+
 public class Address {
-    private String road;
-    private String state;
+
+    private String street;
     private String city;
-    private String zio;
+    private String state;
+    private String zipCode;
     private String houseNumber;
 
-    public Address(String road, String state, String city, String zio, String houseNumber) {
-        this.road = road;
-        this.state = state;
+    public Address(String road, String city, String state, String zip, String houseNumber) {
+        this.street = road;
         this.city = city;
-        this.zio = zio;
+        this.state = state;
+        this.zipCode = zip;
+        this.houseNumber = houseNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    /**
+     * Get the value of houseNumber
+     *
+     * @return the value of houseNumber
+     */
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    /**
+     * Set the value of houseNumber
+     *
+     * @param houseNumber new value of houseNumber
+     */
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
     @Override
     public String toString() {
-        return "Address{" + "road=" + road + ", city=" + city + ", state=" + state + ", zio=" + zio + ", houseNumber=" + houseNumber + '}';
+        return "Address{" + "road=" + street + ", city=" + city + ", state=" + state + ", zip=" + zipCode + ", houseNumber=" + houseNumber + '}';
     }
 
     @Override
@@ -28,63 +81,33 @@ public class Address {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj)
+        if (this == obj) {
             return true;
-        if(obj == null)
+        }
+        if (obj == null) {
             return false;
-        if(this.getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        Address other = (Address) obj;
-        if(this.getRoad() != other.getRoad())
+        }
+        final Address other = (Address) obj;
+        if (!Objects.equals(this.street, other.street)) {
             return false;
-        if(this.getState() != other.getState())
+        }
+        if (!Objects.equals(this.city, other.city)) {
             return false;
-        if(this.getCity() != other.getCity())
+        }
+        if (!Objects.equals(this.state, other.state)) {
             return false;
-        if(this.getZio() != other.getZio())
+        }
+        if (!Objects.equals(this.zipCode, other.zipCode)) {
             return false;
-        if(this.getHouseNumber() != other.getHouseNumber())
+        }
+        if (!Objects.equals(this.houseNumber, other.houseNumber)) {
             return false;
+        }
         return true;
     }
 
-    public String getRoad() {
-        return road;
-    }
 
-    public String getState() {
-        return state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getZio() {
-        return zio;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setRoad(String road) {
-        this.road = road;
-    }
-    
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setZio(String zio) {
-        this.zio = zio;
-    }
-
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
 }
