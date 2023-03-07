@@ -1,6 +1,5 @@
 package mankings.tqs.cars;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public List<Car> getAllCars() {
-        return carService.getAllCars();
+    public ResponseEntity<List<Car>> getAllCars() {
+        return new ResponseEntity<List<Car>>(carService.getAllCars(), HttpStatus.OK);
     }
 
     @GetMapping("/cars/{id}")

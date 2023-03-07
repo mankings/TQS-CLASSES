@@ -20,7 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import mankings.tqs.cars.*;
 
 /*
- * 
+ * in here we use Mockito to mock repository responses and isolate testing to the service
+ * SuT - service
+ * Mock - repository
  */
 @ExtendWith(MockitoExtension.class)
 public class ServiceTest {

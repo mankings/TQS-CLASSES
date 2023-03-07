@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,6 +37,7 @@ import mankings.tqs.cars.*;
  */
 @WebMvcTest(CarController.class)
 public class ControllerTest {
+    
     @Autowired
     private MockMvc mvc;
 
@@ -51,7 +53,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void whenPostCar_thenCreateCar() throws Exception {
+    public void whenPostValidCar_thenCreateCar() throws Exception {
         Car lupito = new Car("Wolkswagen", "Lupo");
 
         when(service.save(any())).thenReturn(lupito);
