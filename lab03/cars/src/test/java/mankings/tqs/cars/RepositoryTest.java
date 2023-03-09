@@ -9,8 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import mankings.tqs.cars.*;
-
 /*
  * in here we isolate testing to the repository 
  * by using an TestEntityManager to persist and find data without involving caches

@@ -23,6 +23,7 @@ import java.util.List;
  * no mocking is used
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations = "application-integrationtest.properties") 
 public class APITest {
 
     @LocalServerPort
