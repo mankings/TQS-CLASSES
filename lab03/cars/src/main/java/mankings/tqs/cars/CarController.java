@@ -37,7 +37,7 @@ public class CarController {
             code = HttpStatus.NOT_FOUND;
         } else {
             code = HttpStatus.OK;
-        }
+        }   
 
         return new ResponseEntity<Car>(car, code);
     }

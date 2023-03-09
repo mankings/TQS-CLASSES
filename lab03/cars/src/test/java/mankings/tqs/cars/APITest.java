@@ -1,4 +1,4 @@
-package mankings.tqs.cars.unit;
+package mankings.tqs.cars;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +11,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
-import mankings.tqs.cars.*;
 
 /*
  * testing the api itself - the whole app
@@ -75,5 +74,14 @@ public class APITest {
 
         List<Car> cars = repository.findAll();
         assertThat(cars).extracting(Car::getMaker).containsOnly(lupito.getMaker());
+    }
+
+    @Test
+    public void whenGetNonExistingCarById_return404() {
+        ResponseEntity<Car> response = restTemplate.exchange("/cars/420", HttpMethod.GET, null, Car.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        
+        List<Car> cars = repository.findAll();
+        assertThat(cars).extracting(Car::getMaker).isEmpty();
     }
 }

@@ -1,4 +1,4 @@
-package mankings.tqs.cars.unit;
+package mankings.tqs.cars;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
