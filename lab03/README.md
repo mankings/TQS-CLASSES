@@ -1,4 +1,4 @@
-# Review Questions
+# Review Questions (Employees)
 ## 1. Identify a couple of examples that use AssertJ expressive methods chaining.
 From *A_EmployeeRepoTest.java*:
 ```java
@@ -42,4 +42,4 @@ That file contains the properties needed to run the integration test, and correc
 
 ## 5. the sample project demonstrates three test strategies to assess an API (C, D and E) developed with SpringBoot. Which are the main/key differences?
 In C, the application is not fully loaded. Only the controller is being tested, so there is no need to load the services and repositories. MockMvc is used to mock the other components.  
-In D and E, the application is fully loaded. However, in D, one accesses the server context through a special testing servlet (MockMvc object) while in E the requester is a REST client (TestRestTemplate)
+In D and E, the application is fully loaded. However, in D, one accesses the server context through a special testing servlet (MockMvc object) while in E the requester is a REST client (TestRestTemplate).
