@@ -25,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
-import mankings.tqs.cars.*;
 
 /*
  * in here we use a MockMvc to mock HTTP requests to our controller.

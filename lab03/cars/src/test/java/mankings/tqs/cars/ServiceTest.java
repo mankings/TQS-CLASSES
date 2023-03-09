@@ -17,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-import mankings.tqs.cars.*;
 
 /*
  * in here we use Mockito to mock repository responses and isolate testing to the service
