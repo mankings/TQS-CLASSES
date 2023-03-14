@@ -81,13 +81,13 @@ public class PageObjectTest {
     private WebElement button5;
 
     @BeforeEach
-    public void setUp() {
+    public void setup() {
         driver = new FirefoxDriver();
         // vars = new HashMap<String, Object>();
     }
 
     @AfterEach
-    public void tearDown() {
+    public void reset() {
         driver.quit();
     }
 
