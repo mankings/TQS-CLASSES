@@ -14,7 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import io.github.bonigarcia.seljup.BrowserType;
 
 @ExtendWith(SeleniumJupiter.class)
-public class TestTest {
+public class DockerTest {
+    /*
+     * docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --name chrome selenium/standalone-chrome
+     */
     @Test
     public void test(@DockerBrowser(type = BrowserType.CHROME) WebDriver driver) {
         driver.get("https://blazedemo.com/");
