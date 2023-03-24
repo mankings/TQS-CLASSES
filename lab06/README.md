@@ -9,8 +9,8 @@ Contudo, contém 19 *Code Smells*, e 1h18min de *technical debt*.
 | File                               | Issue      | Level | Problem description                                                                                                        | How to solve                                                                            |   |   |
 |------------------------------------|------------|-------|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|---|---|
 | euromillions/EuromillionsDraw.java | Code Smell | Minor | The return type of method findMatchesFor should be an interface such as "List" rather than the implementation "ArrayList". | Make the function return a List rather than an ArrayList implementation.                |   |   |
-| euromillions/Dip.java              | Code Smell | Major | For loop at line 68 is testing a variant stop condition.                                                                   | Refactor the code in order to not assign to the loop counter from within the loop body. |   |   |
-| euromillions/EuromillionsDraw.java | Code Smell | Minor | The constructor at line 42 doesn't need the type specification.                                                            | Replace the Dip type specification with the diamond operator <>.                        |   |   |
+| euromillions/Dip.java              | Code Smell | Major | For loop at line 68 is testing a variant stop condition.                                                                   | Refactor the code in order to not assign to the loop counter from within the loop body. | 
+| euromillions/EuromillionsDraw.java | Code Smell | Minor | The constructor at line 42 doesn't need the type specification.                                                            | Replace the Dip type specification with the diamond operator <>.                        |   |
 
 ## 6.2 Technical Debt
 
