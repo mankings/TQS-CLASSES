@@ -39,7 +39,7 @@ public class AirControllerTest {
     
     @BeforeEach
     public void setup() {
-        dummyStats = new AirStats("coimbra", 50, 50, new Date());
+        dummyStats = new AirStats("coimbra", 50, 50, new Date(), 420);
         dummyStats.setValues(10, 20, 30, 40, 50);
     }
 
@@ -57,7 +57,8 @@ public class AirControllerTest {
             get("/api/candieira/today").content("application/json"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.location", is("coimbra")))
-            .andExpect(jsonPath("$.values.co", is(20.0)));
+            .andExpect(jsonPath("$.values.co", is(20.0)))
+            .andExpect(jsonPath("$.aqi", is(420)));
     }
 
     @Test
@@ -72,7 +73,7 @@ public class AirControllerTest {
     @Test
     public void weekRequest() throws Exception {
         List<AirStats> lst = new ArrayList<>();
-        for(int i = 0; i < 7; i++) {
+        for(int i = 0; i < 4; i++) {
             lst.add(dummyStats);
         }
 
@@ -81,7 +82,7 @@ public class AirControllerTest {
         mockMvc.perform(
             get("/api/candieira/week").content("application/json"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.*", hasSize(7)));
+            .andExpect(jsonPath("$.*", hasSize(4)));
     }
 
     @Test
@@ -96,7 +97,7 @@ public class AirControllerTest {
     @Test
     public void historyRequest() throws Exception {
         List<AirStats> lst = new ArrayList<>();
-        for(int i = 0; i < 14; i++) {
+        for(int i = 0; i < 7; i++) {
             lst.add(dummyStats);
         }
 
@@ -105,7 +106,7 @@ public class AirControllerTest {
         mockMvc.perform(
             get("/api/candieira/history").content("application/json"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.*", hasSize(14)));
+            .andExpect(jsonPath("$.*", hasSize(7)));
     }
 
     @Test

@@ -44,9 +44,18 @@ public class AQICNAdapter {
         String response = httpClient.doGet(uri, headers);
         JSONObject jsonresponse = JsonUtils.responseToJson(response);
         
-        JSONObject data = (JSONObject) jsonresponse.get("data");
+        JSONObject data;
+        try {
+            data = (JSONObject) jsonresponse.get("data");
+        } catch (ClassCastException e) {
+            logger.log(Level.INFO, "[ AQICN_ADAPTER ] TODAY VALUES {0}", "NULL");
+            return null;
+        }
+
+        int aqi = ((Long) data.get("aqi")).intValue();
 
         JSONObject cityData = (JSONObject) data.get("city");
+
         String l = (String) cityData.get("name");
         double lat = (Double) ((JSONArray) cityData.get("geo")).get(0);
         double lon = (Double) ((JSONArray) cityData.get("geo")).get(1);
@@ -62,7 +71,7 @@ public class AQICNAdapter {
         double o3 = getValue("o3", todayData);
         double so2 = getValue("so2", todayData);
 
-        AirStats s = new AirStats(l, lat, lon, d);
+        AirStats s = new AirStats(l, lat, lon, d, aqi);
         s.setValues(pm10, co, no2, o3, so2);
         logger.log(Level.INFO, "[ AQICN_ADAPTER ] TODAY VALUES {0}", s);
         

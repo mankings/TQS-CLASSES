@@ -1,7 +1,8 @@
 package tqs.airquality.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,19 +45,19 @@ public class AirServiceTest {
 
     @BeforeEach
     public void setup() {
-        dummyStats = new AirStats("Coimbra", 50, 50, new Date());
+        dummyStats = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
         dummyStats.setValues(15, 25, 35, 30, 40);
 
         dummyWeek = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            AirStats s = new AirStats("Coimbra", 50, 50, new Date());
+            AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyWeek.add(s);
         }
 
         dummyHistory = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
-            AirStats s = new AirStats("Coimbra", 50, 50, new Date());
+            AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyHistory.add(s);
         }
@@ -83,7 +84,7 @@ public class AirServiceTest {
     @Test
     public void getWeekStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
-        Mockito.when(openWeatherAdapter.week(50, 50)).thenReturn(dummyWeek);
+        Mockito.when(openWeatherAdapter.week(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
 
         assertThat(service.week("Coimbra")).hasSize(7);
     }
@@ -93,13 +94,13 @@ public class AirServiceTest {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
         assertThat(service.week("qwerty")).isEqualTo(null);
-        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).week(anyLong(), anyLong());
+        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).week(anyString(), anyDouble(), anyDouble());
     }
 
     @Test
     public void getHistoryStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
-        Mockito.when(openWeatherAdapter.history(50, 50)).thenReturn(dummyHistory);
+        Mockito.when(openWeatherAdapter.history(anyString(), anyDouble(), anyDouble())).thenReturn(dummyHistory);
 
         assertThat(service.history("Coimbra")).hasSize(14);
     }
@@ -109,6 +110,6 @@ public class AirServiceTest {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
         assertThat(service.history("qwerty")).isEqualTo(null);
-        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).history(anyLong(), anyLong());
+        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).history(anyString(), anyDouble(), anyDouble());
     }
 }

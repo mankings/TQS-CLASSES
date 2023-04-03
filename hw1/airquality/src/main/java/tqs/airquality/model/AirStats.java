@@ -8,14 +8,18 @@ public class AirStats {
     private String location;
     private double lat, lon;
 
+    
     private Date date;
+    
+    private int aqi;
     private HashMap<String, Double> values;
 
-    public AirStats(String location, double lat, double lon, Date date) {
+    public AirStats(String location, double lat, double lon, Date date, int aqi) {
         this.location = location;
         this.date = date;
         this.lat = lat;
         this.lon = lon;
+        this.aqi = aqi;
 
         this.values = new HashMap<>();
     }
@@ -36,6 +40,10 @@ public class AirStats {
         return lon;
     }
 
+    public int getAqi() {
+        return aqi;
+    }
+
     public void setValues(double pm10, double co, double no2, double o3, double so2) {
         values.put("pm10", pm10);
         values.put("co", co);
@@ -50,6 +58,6 @@ public class AirStats {
 
     @Override
     public String toString() {
-        return location + "; " + date.toString() + "; " + values.toString();
+        return location + "; " + date.toString() + "; " + aqi + "; " + values.toString();
     }
 }

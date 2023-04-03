@@ -27,7 +27,7 @@ public class AirController {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     @GetMapping("/{location}/today")
-    public ResponseEntity<AirStats> today(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+    public ResponseEntity<AirStats> today(@PathVariable(value = "location") String location) throws Exception {
         logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/today");
         
         AirStats stats = service.today(location);
@@ -42,7 +42,7 @@ public class AirController {
     }
 
     @GetMapping("/{location}/week")
-    public ResponseEntity<List<AirStats>> week(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+    public ResponseEntity<List<AirStats>> week(@PathVariable(value = "location") String location) throws Exception {
         logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/week");
 
         List<AirStats> weekStats = service.week(location);
@@ -58,7 +58,7 @@ public class AirController {
     }
 
     @GetMapping("/{location}/history")
-    public ResponseEntity<List<AirStats>> history(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+    public ResponseEntity<List<AirStats>> history(@PathVariable(value = "location") String location) throws Exception {
         logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/history");
         
         List<AirStats> historyStats = service.history(location);
