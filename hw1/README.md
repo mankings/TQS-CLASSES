@@ -9,14 +9,13 @@ https://openweathermap.org/api/air-pollution
 75c3f5925b71f4eb65d98f5a4d285f2c
 
 ### my endpoints
-api/{city}/today  
-api/{city}/weekly  
-api/{city}/history  
-api/cache  
+api/{city}/today 
+api/{city}/weekly 
+api/{city}/history
+api/cache
 
 ### todo
+* cache stats endpoint
 * integration testing
 * frontend
 * CI pipeline? wtf is this
-* BETTER TESTS WHERE ONLY TESTING ARRAY LENGTH
-* 

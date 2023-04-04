@@ -20,8 +20,6 @@ import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.jayway.jsonpath.Option;
-
 import tqs.airquality.adapters.AQICNAdapter;
 import tqs.airquality.adapters.OpenWeatherAdapter;
 import tqs.airquality.cache.AirCache;
@@ -56,14 +54,14 @@ public class AirServiceTest {
         dummyStats.setValues(15, 25, 35, 30, 40);
 
         dummyWeek = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i <= 4; i++) {
             AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyWeek.add(s);
         }
 
         dummyHistory = new ArrayList<>();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 1; i <= 7; i++) {
             AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyHistory.add(s);
@@ -95,7 +93,9 @@ public class AirServiceTest {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
         Mockito.when(openWeatherAdapter.week(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
 
-        assertThat(service.week("Coimbra")).hasSize(7);
+        List<AirStats> lst = service.week("Coimbra");
+        assertThat(lst).hasSize(4);
+        assertThat(lst.get(2).getValues().get("co")).isEqualTo(30);
     }
 
     @Test
@@ -111,7 +111,9 @@ public class AirServiceTest {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
         Mockito.when(openWeatherAdapter.history(anyString(), anyDouble(), anyDouble())).thenReturn(dummyHistory);
 
-        assertThat(service.history("Coimbra")).hasSize(14);
+        List<AirStats> lst = service.history("Coimbra");
+        assertThat(lst).hasSize(7);
+        assertThat(lst.get(2).getValues().get("co")).isEqualTo(30);
     }
 
     @Test
