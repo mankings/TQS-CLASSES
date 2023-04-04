@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +20,11 @@ import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.jayway.jsonpath.Option;
+
 import tqs.airquality.adapters.AQICNAdapter;
 import tqs.airquality.adapters.OpenWeatherAdapter;
+import tqs.airquality.cache.AirCache;
 import tqs.airquality.model.AirStats;
 
 /*
@@ -35,6 +39,9 @@ public class AirServiceTest {
 
     @Mock
     private OpenWeatherAdapter openWeatherAdapter;
+
+    @Mock(lenient = true)
+    private AirCache cache;
 
     @InjectMocks
     private AirService service;
@@ -61,6 +68,8 @@ public class AirServiceTest {
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyHistory.add(s);
         }
+
+        Mockito.when(cache.get(anyString())).thenReturn(Optional.empty());
     }
 
     @AfterEach

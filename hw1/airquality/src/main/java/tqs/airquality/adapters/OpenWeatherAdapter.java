@@ -12,12 +12,14 @@ import org.apache.http.client.utils.URIBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import tqs.airquality.http.IHttpClient;
 import tqs.airquality.model.AirStats;
 import tqs.airquality.utils.ConfigUtils;
 import tqs.airquality.utils.JsonUtils;
 
+@Service
 public class OpenWeatherAdapter {
     @Autowired
     private IHttpClient httpClient;
