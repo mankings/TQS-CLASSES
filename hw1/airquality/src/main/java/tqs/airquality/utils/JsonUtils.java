@@ -6,6 +6,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonUtils {
+    private JsonUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static JSONObject responseToJson(String response) throws ParseException {
         return (JSONObject) new JSONParser().parse(response);
     }

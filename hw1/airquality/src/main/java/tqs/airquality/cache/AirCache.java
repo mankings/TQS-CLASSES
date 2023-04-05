@@ -18,9 +18,6 @@ public class AirCache implements ICache<String, Object> {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public AirCache() {
-    }
-
     @Override
     public Optional<Object> get(String key) {
         logger.log(Level.INFO, "[ CACHE ] GET {0} - FETCHING", key);

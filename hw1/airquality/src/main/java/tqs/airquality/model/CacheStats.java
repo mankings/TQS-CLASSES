@@ -1,7 +1,10 @@
 package tqs.airquality.model;
 
 public class CacheStats {
-    private long total, hits, noCacheTime, cacheTime;
+    private long total;
+    private long hits;
+    private long noCacheTime; 
+    private long cacheTime;
 
 
     public CacheStats(long total, long hits, long noCacheTime, long cacheTime) {

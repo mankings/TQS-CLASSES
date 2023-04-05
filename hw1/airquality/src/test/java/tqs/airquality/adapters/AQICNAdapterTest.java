@@ -22,7 +22,7 @@ import tqs.airquality.model.AirStats;
  * so that we can isolate the adapter and properly test it
  */
 @ExtendWith(MockitoExtension.class)
-public class AQICNAdapterTest {
+class AQICNAdapterTest {
     @Mock
     private IHttpClient httpClient;
 
@@ -42,7 +42,7 @@ public class AQICNAdapterTest {
     }
     
     @Test
-    public void today() throws Exception {
+    void today() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(todayLondonResponse);
         AirStats stats = adapter.today("london");
 
@@ -52,19 +52,19 @@ public class AQICNAdapterTest {
     }
 
     @Test
-    public void todayMissingValues() throws Exception {
+    void todayMissingValues() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(todayPortoResponse);
         AirStats stats = adapter.today("porto");
 
         assertThat(stats.getLocation()).isEqualTo("Sobreiras-Lordelo do Ouro, Porto, Portugal");
-        assertThat(stats.getValues().get("co")).isEqualTo(-1.0);
+        assertThat(stats.getValues()).containsEntry("co", -1.0);
     }
 
     @Test
-    public void todayBadLocation() throws Exception {
+    void todayBadLocation() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(unknownStationResponse);
         AirStats stats = adapter.today("qwerty");
 
-        assertThat(stats).isEqualTo(null);
+        assertThat(stats).isNull();
     }
 }

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AirCacheTest {
+class AirCacheTest {
     private AirCache cache;
     private long test_expiracy = 2;
 
@@ -17,7 +17,7 @@ public class AirCacheTest {
     }
 
     @Test
-    public void expiracy() throws InterruptedException {
+    void expiracy() throws InterruptedException {
         this.cache.put("key", "value");
         Thread.sleep((test_expiracy + 1) * 1000);
         assertTrue(this.cache.get("key").isEmpty());
@@ -28,7 +28,7 @@ public class AirCacheTest {
     }
 
     @Test
-    public void noMatch() {
+    void noMatch() {
         this.cache.get("quem");
         assertTrue(this.cache.get("key").isEmpty());
     }

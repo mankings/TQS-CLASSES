@@ -6,7 +6,8 @@ import java.util.HashMap;
 
 public class AirStats {
     private String location;
-    private double lat, lon;
+    private double lat;
+    private double lon;
 
     
     private Date date;

@@ -6,8 +6,10 @@ import tqs.airquality.model.CacheStats;
 
 @Service
 public class CacheTracker {
-    private long totalRequests, hits;
-    private long avgFetchTime, avgCacheTime;
+    private long totalRequests;
+    private long hits;
+    private long avgFetchTime;
+    private long avgCacheTime;
 
     public CacheTracker() {
         this.totalRequests = 0;

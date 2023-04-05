@@ -20,26 +20,23 @@ public class HttpClient implements IHttpClient {
 
     @Override
     public String doGet(String url, Map<String, Object> headers) throws IOException, ParseException {
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(url);
-
-        logger.log(Level.INFO, "[ HTTP ] GET {0} ", url);
-
-        for (Map.Entry<String, Object> entry : headers.entrySet()) {
-            request.setHeader(entry.getKey(), entry.getValue().toString());
-        }
-
-        CloseableHttpResponse response = client.execute(request);
-        try {
-            HttpEntity entity = response.getEntity();
-            String resp = EntityUtils.toString(entity);
-
-            logger.log(Level.INFO, "[ HTTP ] GOT {0}", resp);
-
-            return resp;
-        } finally {
-            if (response != null)
-                response.close();
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(url);
+    
+            logger.log(Level.INFO, "[ HTTP ] GET {0} ", url);
+    
+            for (Map.Entry<String, Object> entry : headers.entrySet()) {
+                request.setHeader(entry.getKey(), entry.getValue().toString());
+            }
+    
+            try (CloseableHttpResponse response = client.execute(request)) {
+                HttpEntity entity = response.getEntity();
+                String resp = EntityUtils.toString(entity);
+    
+                logger.log(Level.INFO, "[ HTTP ] GOT {0}", resp);
+    
+                return resp;
+            }
         }
     }
 }

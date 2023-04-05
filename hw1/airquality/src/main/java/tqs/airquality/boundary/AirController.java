@@ -2,7 +2,7 @@ package tqs.airquality.boundary;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-import org.apache.catalina.webresources.Cache;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +13,8 @@ import tqs.airquality.model.AirStats;
 import tqs.airquality.model.CacheStats;
 import tqs.airquality.service.AirService;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,10 +26,11 @@ public class AirController {
     private AirService service;
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
+    private String logstr = "[ CONTROLLER ] GET {0}";
 
     @GetMapping("/{location}/today")
-    public ResponseEntity<AirStats> today(@PathVariable(value = "location") String location) throws Exception {
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/today");
+    public ResponseEntity<AirStats> today(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+        logger.log(Level.INFO, logstr, "/" + location + "/today");
         
         AirStats stats = service.today(location);
         HttpStatus code;
@@ -37,46 +40,46 @@ public class AirController {
             code = HttpStatus.NOT_FOUND;
         }
 
-        return new ResponseEntity<AirStats>(stats, code);
+        return new ResponseEntity<>(stats, code);
     }
 
     @GetMapping("/{location}/week")
-    public ResponseEntity<List<AirStats>> week(@PathVariable(value = "location") String location) throws Exception {
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/week");
+    public ResponseEntity<List<AirStats>> week(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+        logger.log(Level.INFO, logstr, "/" + location + "/week");
 
         List<AirStats> weekStats = service.week(location);
         HttpStatus code;
-        if (weekStats != null) {
+        if (!weekStats.isEmpty()) {
             code = HttpStatus.OK;
         } else {
             code = HttpStatus.NOT_FOUND;
         }
 
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", code.toString() + "/" + location + "/week");
-        return new ResponseEntity<List<AirStats>>(weekStats, code);
+        logger.log(Level.INFO, logstr, code.toString() + "/" + location + "/week");
+        return new ResponseEntity<>(weekStats, code);
     }
 
     @GetMapping("/{location}/history")
-    public ResponseEntity<List<AirStats>> history(@PathVariable(value = "location") String location) throws Exception {
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/" + location + "/history");
+    public ResponseEntity<List<AirStats>> history(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+        logger.log(Level.INFO, logstr, "/" + location + "/history");
         
         List<AirStats> historyStats = service.history(location);
         HttpStatus code;
-        if (historyStats != null) {
+        if (!historyStats.isEmpty()) {
             code = HttpStatus.OK;
         } else {
             code = HttpStatus.NOT_FOUND;
         }
 
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", code.toString() + "/" + location + "/history");
-        return new ResponseEntity<List<AirStats>>(historyStats, code);
+        logger.log(Level.INFO, logstr, code.toString() + "/" + location + "/history");
+        return new ResponseEntity<>(historyStats, code);
     }
 
     @GetMapping("/cache")
     public ResponseEntity<CacheStats> cache() {
-        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/cache");
+        logger.log(Level.INFO, logstr, "/cache");
         CacheStats stats = service.cacheStats();
 
-        return new ResponseEntity<CacheStats>(stats, HttpStatus.OK);
+        return new ResponseEntity<>(stats, HttpStatus.OK);
     }
 }

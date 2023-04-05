@@ -29,7 +29,7 @@ import tqs.airquality.service.AirService;
  * so we can test the controller by itself
  */
 @WebMvcTest(AirController.class)
-public class AirControllerTest {
+class AirControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -49,7 +49,7 @@ public class AirControllerTest {
     }
 
     @Test
-    public void todayRequest() throws Exception {
+    void todayRequest() throws Exception {
 
 
         when(service.today(anyString())).thenReturn(dummyStats);
@@ -63,7 +63,7 @@ public class AirControllerTest {
     }
 
     @Test
-    public void todayBadRequest() throws Exception {
+    void todayBadRequest() throws Exception {
         when(service.today(anyString())).thenReturn(null);
 
         mockMvc.perform(
@@ -72,7 +72,7 @@ public class AirControllerTest {
     }
 
     @Test
-    public void weekRequest() throws Exception {
+     void weekRequest() throws Exception {
         List<AirStats> lst = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
             lst.add(dummyStats);
@@ -87,8 +87,8 @@ public class AirControllerTest {
     }
 
     @Test
-    public void weekBadRequest() throws Exception {
-        when(service.week(anyString())).thenReturn(null);
+    void weekBadRequest() throws Exception {
+        when(service.week(anyString())).thenReturn(new ArrayList<AirStats>());
 
         mockMvc.perform(
             get("/api/qwerty/week").content("application/json"))
@@ -96,7 +96,7 @@ public class AirControllerTest {
     }
 
     @Test
-    public void historyRequest() throws Exception {
+    void historyRequest() throws Exception {
         List<AirStats> lst = new ArrayList<>();
         for(int i = 0; i < 7; i++) {
             lst.add(dummyStats);
@@ -111,8 +111,8 @@ public class AirControllerTest {
     }
 
     @Test
-    public void historyBadRequest() throws Exception {
-        when(service.history(anyString())).thenReturn(null);
+    void historyBadRequest() throws Exception {
+        when(service.history(anyString())).thenReturn(new ArrayList<AirStats>());
 
         mockMvc.perform(
             get("/api/qwerty/history").content("application/json"))
@@ -120,7 +120,7 @@ public class AirControllerTest {
     }
 
     @Test
-    public void cacheRequest() throws Exception {
+    void cacheRequest() throws Exception {
         when(service.cacheStats()).thenReturn(new CacheStats(1, 2, 3, 4));
 
         mockMvc.perform(

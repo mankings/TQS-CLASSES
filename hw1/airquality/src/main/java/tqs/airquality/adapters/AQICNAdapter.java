@@ -26,8 +26,8 @@ public class AQICNAdapter {
     @Autowired
     private IHttpClient httpClient;
 
-    private final String API_URL = ConfigUtils.getPropertyFromConfig("aqicn.url");
-    private final String API_KEY = ConfigUtils.getPropertyFromConfig("aqicn.key");
+    private static final String APIURL = ConfigUtils.getPropertyFromConfig("aqicn.url");
+    private static final String APIKEY = ConfigUtils.getPropertyFromConfig("aqicn.key");
 
     private Map<String, Object> headers = new HashMap<>();
 
@@ -35,8 +35,8 @@ public class AQICNAdapter {
 
     public AirStats today(String location) throws URISyntaxException, ParseException, IOException {
         String path = "feed/" + location + "/";
-        URIBuilder uriBuilder = new URIBuilder(API_URL + path);
-        uriBuilder.addParameter("token", API_KEY);
+        URIBuilder uriBuilder = new URIBuilder(APIURL + path);
+        uriBuilder.addParameter("token", APIKEY);
         String uri = uriBuilder.build().toString();
 
         logger.log(Level.INFO, "[ AQICN_ADAPTER ] TODAY URI {0}", uri);

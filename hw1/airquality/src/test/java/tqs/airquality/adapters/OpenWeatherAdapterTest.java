@@ -24,7 +24,7 @@ import tqs.airquality.model.AirStats;
  * mockito again: refer to other adapter class
  */
 @ExtendWith(MockitoExtension.class)
-public class OpenWeatherAdapterTest {
+class OpenWeatherAdapterTest {
     @Mock
     private IHttpClient httpClient;
 
@@ -46,7 +46,7 @@ public class OpenWeatherAdapterTest {
     }
 
     @Test
-    public void week() throws Exception {
+    void week() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(weekResponse);
         List<AirStats> statslst = adapter.week("coimbra", 40.0, -8);
 
@@ -54,15 +54,15 @@ public class OpenWeatherAdapterTest {
     }
 
     @Test
-    public void weekBadRequest() throws Exception {
+    void weekBadRequest() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(badResponse);
         List<AirStats> statslst = adapter.week("coimbra", 140.0, -8);
 
-        assertThat(statslst).isEqualTo(null);
+        assertThat(statslst).isEmpty();
     }
 
     @Test
-    public void history() throws Exception {
+    void history() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(historyResponse);
         List<AirStats> statslst = adapter.history("coimbra", 40.0, -8);
 
@@ -70,10 +70,10 @@ public class OpenWeatherAdapterTest {
     }
 
     @Test
-    public void historyBadRequest() throws Exception {
+    void historyBadRequest() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(badResponse);
         List<AirStats> statslst = adapter.history("coimbra", 140.0, -8);
 
-        assertThat(statslst).isEqualTo(null);
+        assertThat(statslst).isEmpty();
     }
 }

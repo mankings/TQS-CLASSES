@@ -31,7 +31,7 @@ import tqs.airquality.model.AirStats;
  * this allows us to, once again, isolate the component under test - in this case, the service
  */
 @ExtendWith(MockitoExtension.class)
-public class AirServiceTest {
+class AirServiceTest {
     @Mock
     private AQICNAdapter aqicnAdapter;
 
@@ -75,52 +75,52 @@ public class AirServiceTest {
     }
 
     @Test
-    public void getTodayStats() throws Exception {
+    void getTodayStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
 
         assertThat(service.today("Coimbra").getLat()).isEqualTo(50);
     }
 
     @Test
-    public void getTodayStatsBad() throws Exception {
+    void getTodayStatsBad() throws Exception {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
-        assertThat(service.today("qwerty")).isEqualTo(null);
+        assertThat(service.today("qwerty")).isNull();
     }
 
     @Test
-    public void getWeekStats() throws Exception {
+    void getWeekStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
         Mockito.when(openWeatherAdapter.week(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
 
         List<AirStats> lst = service.week("Coimbra");
         assertThat(lst).hasSize(4);
-        assertThat(lst.get(2).getValues().get("co")).isEqualTo(30);
+        assertThat(lst.get(2).getValues()).containsEntry("co", 30.0);
     }
 
     @Test
-    public void getWeekStatsBad() throws Exception {
+    void getWeekStatsBad() throws Exception {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
-        assertThat(service.week("qwerty")).isEqualTo(null);
+        assertThat(service.week("qwerty")).isEmpty();
         Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).week(anyString(), anyDouble(), anyDouble());
     }
 
     @Test
-    public void getHistoryStats() throws Exception {
+    void getHistoryStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
         Mockito.when(openWeatherAdapter.history(anyString(), anyDouble(), anyDouble())).thenReturn(dummyHistory);
 
         List<AirStats> lst = service.history("Coimbra");
         assertThat(lst).hasSize(7);
-        assertThat(lst.get(2).getValues().get("co")).isEqualTo(30);
+        assertThat(lst.get(2).getValues()).containsEntry("co", 30.0);
     }
 
     @Test
-    public void getHistoryStatsBad() throws Exception {
+    void getHistoryStatsBad() throws Exception {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
-        assertThat(service.history("qwerty")).isEqualTo(null);
+        assertThat(service.history("qwerty")).isEmpty();
         Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).history(anyString(), anyDouble(), anyDouble());
     }
 }

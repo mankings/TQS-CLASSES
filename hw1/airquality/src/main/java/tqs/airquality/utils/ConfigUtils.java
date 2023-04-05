@@ -1,18 +1,23 @@
 package tqs.airquality.utils;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigUtils {
-    static public String getPropertyFromConfig(String property) {
+    private ConfigUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static String getPropertyFromConfig(String property) {
 
         try (InputStream input = ConfigUtils.class.getClassLoader().getResourceAsStream("application.properties")) {
 
             Properties prop = new Properties();
 
             if (input == null) {
-                throw new RuntimeException("Unable to find application.properties");
+                throw new FileNotFoundException("Unable to find application.properties");
             }
 
             // load a properties file from class path, inside static method

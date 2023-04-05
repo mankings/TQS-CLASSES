@@ -1,5 +1,7 @@
 package tqs.airquality.service;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +40,8 @@ public class AirService {
     }
     
 
-    public AirStats today(String location) throws Exception {
-        logger.log(Level.INFO, "[ SERVICE ] TODAY {0}", location);
+    public AirStats today(String location) throws URISyntaxException, ParseException, IOException {
+        logger.log(Level.INFO, "[ SERVICE ] TODAY {0}", location);  
         logger.log(Level.INFO, "[ SERVICE ] TODAY {0} cache", cache);
 
         String key = "/today?" + location.toLowerCase();
@@ -59,11 +62,11 @@ public class AirService {
         return stats;
     }
 
-    public List<AirStats> week(String location) throws Exception {
+    public List<AirStats> week(String location) throws URISyntaxException, ParseException, IOException {
         logger.log(Level.INFO, "[ SERVICE ] WEEK {0}", location);
         AirStats s = this.today(location);
         if (s == null)
-            return null;
+            return new ArrayList<>();
 
         String key = "/week?" + location.toLowerCase();
         long ts = new Date().getTime();
@@ -71,23 +74,23 @@ public class AirService {
         List<AirStats> lst;
 
         if (cacheresult.isEmpty()) {
-            logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - FETCHING", location);
+            logger.log(Level.INFO, "[ SERVICE ] WEEK {0} - FETCHING", location);
             lst = openWeatherAdapter.week(location, s.getLat(), s.getLon());
             cacheTracker.requestTrack(false, new Date().getTime() - ts);
             return lst;
         }
 
-        logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - IN CACHE", location);
+        logger.log(Level.INFO, "[ SERVICE ] WEEK {0} - IN CACHE", location);
         lst = (ArrayList<AirStats>) cacheresult.get();
         cacheTracker.requestTrack(true, new Date().getTime() - ts);
         return lst;
     }
 
-    public List<AirStats> history(String location) throws Exception {
+    public List<AirStats> history(String location) throws URISyntaxException, ParseException, IOException {
         logger.log(Level.INFO, "[ SERVICE ] HISTORY {0}", location);
         AirStats s = this.today(location);
         if (s == null)
-            return null;
+            return new ArrayList<>();
 
         String key = "/history?" + location.toLowerCase();
         long ts = new Date().getTime();
@@ -95,13 +98,13 @@ public class AirService {
         List<AirStats> lst;
 
         if (cacheresult.isEmpty()) {
-            logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - FETCHING", location);
+            logger.log(Level.INFO, "[ SERVICE ] HISTORY {0} - FETCHING", location);
             lst = openWeatherAdapter.history(location, s.getLat(), s.getLon());
             cacheTracker.requestTrack(false, new Date().getTime() - ts);
             return lst;
         } 
 
-        logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - IN CACHE", location);
+        logger.log(Level.INFO, "[ SERVICE ] HISTORY {0} - IN CACHE", location);
         lst = (ArrayList<AirStats>) cacheresult.get();
         cacheTracker.requestTrack(true, new Date().getTime() - ts);
         return lst;

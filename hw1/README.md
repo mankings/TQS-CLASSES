@@ -15,7 +15,8 @@ api/{city}/history
 api/cache
 
 ### todo
-* cache stats endpoint
 * integration testing
 * frontend
 * CI pipeline? wtf is this
+
+sonarqube token: sqp_5053718484d82255192c354d3224f7026bbe86b5
