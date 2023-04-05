@@ -2,6 +2,8 @@ package tqs.airquality.cache;
 
 import org.springframework.stereotype.Service;
 
+import tqs.airquality.model.CacheStats;
+
 @Service
 public class CacheTracker {
     private long totalRequests, hits;
@@ -38,6 +40,10 @@ public class CacheTracker {
 
     public long getAvgCacheTime() {
         return avgCacheTime;
+    }
+
+    public CacheStats getStats() {
+        return new CacheStats(totalRequests, hits, avgFetchTime, avgCacheTime);
     }
 
     @Override

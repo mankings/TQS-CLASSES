@@ -15,6 +15,7 @@ import tqs.airquality.adapters.OpenWeatherAdapter;
 import tqs.airquality.cache.CacheTracker;
 import tqs.airquality.cache.ICache;
 import tqs.airquality.model.AirStats;
+import tqs.airquality.model.CacheStats;
 
 @Service
 public class AirService {
@@ -104,6 +105,10 @@ public class AirService {
         lst = (ArrayList<AirStats>) cacheresult.get();
         cacheTracker.requestTrack(true, new Date().getTime() - ts);
         return lst;
+    }
 
+    public CacheStats cacheStats() {
+        logger.log(Level.INFO, "[ SERVICE ] CACHESTATS {0}", "");
+        return this.cacheTracker.getStats();
     }
 }

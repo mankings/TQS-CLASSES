@@ -21,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import tqs.airquality.model.AirStats;
+import tqs.airquality.model.CacheStats;
 import tqs.airquality.service.AirService;
 
 /*
@@ -116,5 +117,15 @@ public class AirControllerTest {
         mockMvc.perform(
             get("/api/qwerty/history").content("application/json"))
             .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void cacheRequest() throws Exception {
+        when(service.cacheStats()).thenReturn(new CacheStats(1, 2, 3, 4));
+
+        mockMvc.perform(
+            get("/api/cache").content("application/json"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.hits", is(2)));
     }
 }

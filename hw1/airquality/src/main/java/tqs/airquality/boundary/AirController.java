@@ -2,6 +2,7 @@ package tqs.airquality.boundary;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.apache.catalina.webresources.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tqs.airquality.model.AirStats;
+import tqs.airquality.model.CacheStats;
 import tqs.airquality.service.AirService;
 
 import java.util.List;
@@ -70,5 +72,11 @@ public class AirController {
         return new ResponseEntity<List<AirStats>>(historyStats, code);
     }
 
-    // TODO cache stats endpoint
+    @GetMapping("/cache")
+    public ResponseEntity<CacheStats> cache() {
+        logger.log(Level.INFO, "[ CONTROLLER ] GET {0}", "/cache");
+        CacheStats stats = service.cacheStats();
+
+        return new ResponseEntity<CacheStats>(stats, HttpStatus.OK);
+    }
 }
