@@ -43,11 +43,11 @@ public class AirController {
         return new ResponseEntity<>(stats, code);
     }
 
-    @GetMapping("/{location}/week")
-    public ResponseEntity<List<AirStats>> week(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
-        logger.log(Level.INFO, logstr, "/" + location + "/week");
+    @GetMapping("/{location}/forecast")
+    public ResponseEntity<List<AirStats>> forecast(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
+        logger.log(Level.INFO, logstr, "/" + location + "/forecast");
 
-        List<AirStats> weekStats = service.week(location);
+        List<AirStats> weekStats = service.forecast(location);
         HttpStatus code;
         if (!weekStats.isEmpty()) {
             code = HttpStatus.OK;
@@ -55,7 +55,7 @@ public class AirController {
             code = HttpStatus.NOT_FOUND;
         }
 
-        logger.log(Level.INFO, logstr, code.toString() + "/" + location + "/week");
+        logger.log(Level.INFO, logstr, code.toString() + "/" + location + "/forecast");
         return new ResponseEntity<>(weekStats, code);
     }
 

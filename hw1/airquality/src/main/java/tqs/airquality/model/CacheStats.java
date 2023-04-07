@@ -45,4 +45,9 @@ public class CacheStats {
     public void setCacheTime(long cacheTime) {
         this.cacheTime = cacheTime;
     }
+
+    @Override
+    public String toString() {
+        return "CacheStats [total="+ total + ", hits=" + hits + ", noCacheTime=" + noCacheTime + ", cacheTime=" + cacheTime + "]";
+    }
 }

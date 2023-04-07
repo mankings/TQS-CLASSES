@@ -72,26 +72,26 @@ class AirControllerTest {
     }
 
     @Test
-     void weekRequest() throws Exception {
+     void forecastRequest() throws Exception {
         List<AirStats> lst = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
             lst.add(dummyStats);
         }
 
-        when(service.week(anyString())).thenReturn(lst);
+        when(service.forecast(anyString())).thenReturn(lst);
 
         mockMvc.perform(
-            get("/api/candieira/week").content("application/json"))
+            get("/api/candieira/forecast").content("application/json"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.*", hasSize(4)));
     }
 
     @Test
-    void weekBadRequest() throws Exception {
-        when(service.week(anyString())).thenReturn(new ArrayList<AirStats>());
+    void forecastBadRequest() throws Exception {
+        when(service.forecast(anyString())).thenReturn(new ArrayList<AirStats>());
 
         mockMvc.perform(
-            get("/api/qwerty/week").content("application/json"))
+            get("/api/qwerty/forecast").content("application/json"))
             .andExpect(status().isNotFound());
     }
 

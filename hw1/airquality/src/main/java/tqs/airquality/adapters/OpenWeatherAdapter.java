@@ -34,7 +34,7 @@ public class OpenWeatherAdapter {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public List<AirStats> week(String location, double lat, double lon) throws URISyntaxException, ParseException, IOException {
+    public List<AirStats> forecast(String location, double lat, double lon) throws URISyntaxException, ParseException, IOException {
         String path = "forecast";
         URIBuilder uriBuilder = new URIBuilder(APIURL + path);
         uriBuilder.addParameter("lat", String.valueOf(lat));

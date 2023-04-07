@@ -89,21 +89,21 @@ class AirServiceTest {
     }
 
     @Test
-    void getWeekStats() throws Exception {
+    void getForecastStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
-        Mockito.when(openWeatherAdapter.week(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
+        Mockito.when(openWeatherAdapter.forecast(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
 
-        List<AirStats> lst = service.week("Coimbra");
+        List<AirStats> lst = service.forecast("Coimbra");
         assertThat(lst).hasSize(4);
         assertThat(lst.get(2).getValues()).containsEntry("co", 30.0);
     }
 
     @Test
-    void getWeekStatsBad() throws Exception {
+    void getForecastStatsBad() throws Exception {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
-        assertThat(service.week("qwerty")).isEmpty();
-        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).week(anyString(), anyDouble(), anyDouble());
+        assertThat(service.forecast("qwerty")).isEmpty();
+        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).forecast(anyString(), anyDouble(), anyDouble());
     }
 
     @Test
