@@ -34,8 +34,42 @@ public class OpenWeatherAdapter {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public List<AirStats> forecast(String location, double lat, double lon) throws URISyntaxException, ParseException, IOException {
-        String path = "forecast";
+    public AirStats today(double lat, double lon) throws URISyntaxException, ParseException, IOException {
+        String path = "";
+        URIBuilder uriBuilder = new URIBuilder(APIURL + path);
+        uriBuilder.addParameter("lat", String.valueOf(lat));
+        uriBuilder.addParameter("lon", String.valueOf(lon));
+        uriBuilder.addParameter("appid", APIKEY);
+        String uri = uriBuilder.build().toString();
+
+        logger.log(Level.INFO, "[ OPENWEATHER_ADAPTER ] TODAY URI {0}", uri);
+
+        String response = httpClient.doGet(uri, headers);
+        JSONObject jsonresponse = JsonUtils.responseToJson(response);
+
+        JSONArray jsonarr = (JSONArray) jsonresponse.get("list");
+        JSONObject jobj = (JSONObject) jsonarr.get(0);
+
+        int dt = ((Long) jobj.get("dt")).intValue();
+
+        int aqi = ((Long) ((JSONObject) jobj.get("main")).get("aqi")).intValue();
+
+        JSONObject components = (JSONObject) jobj.get("components");
+        double pm10 = getValue("pm10", components);
+        double co = getValue("co", components);
+        double no2 = getValue("no2", components);
+        double o3 = getValue("o3", components);
+        double so2 = getValue("so2", components);
+
+        Date d = new Date(dt * (long) 1000);
+        AirStats s = new AirStats("", "", lat, lon, d, aqi);
+        s.setValues(pm10, co, no2, o3, so2);
+
+        return s;
+    }
+
+    public List<AirStats> forecast(double lat, double lon) throws URISyntaxException, ParseException, IOException {
+        String path = "/forecast";
         URIBuilder uriBuilder = new URIBuilder(APIURL + path);
         uriBuilder.addParameter("lat", String.valueOf(lat));
         uriBuilder.addParameter("lon", String.valueOf(lon));
@@ -54,8 +88,9 @@ public class OpenWeatherAdapter {
         }
 
         List<AirStats> lst = new ArrayList<>();
-        for (int i = 1; i <= 4; i++) {
-            JSONObject jobj = (JSONObject) jsonarr.get(jsonarr.size() / 4 - 1);
+        for (int i = 0; i < 4; i++) {
+            int idx = i * 24;
+            JSONObject jobj = (JSONObject) jsonarr.get(idx);
 
             int dt = ((Long) jobj.get("dt")).intValue();
 
@@ -68,7 +103,8 @@ public class OpenWeatherAdapter {
             double o3 = getValue("o3", components);
             double so2 = getValue("so2", components);
 
-            AirStats s = new AirStats(location, lat, lon, new Date(dt * (long) 1000), aqi);
+            Date d = new Date(dt * (long) 1000);
+            AirStats s = new AirStats("", "", lat, lon, d, aqi);
             s.setValues(pm10, co, no2, o3, so2);
 
             lst.add(s);
@@ -78,8 +114,8 @@ public class OpenWeatherAdapter {
         return lst;
     }
 
-    public List<AirStats> history(String location, double lat, double lon) throws URISyntaxException, ParseException, IOException{
-        String path = "history";
+    public List<AirStats> history(double lat, double lon) throws URISyntaxException, ParseException, IOException{
+        String path = "/history";
         URIBuilder uriBuilder = new URIBuilder(APIURL + path);
         uriBuilder.addParameter("lat", String.valueOf(lat));
         uriBuilder.addParameter("lon", String.valueOf(lon));
@@ -104,21 +140,23 @@ public class OpenWeatherAdapter {
         }
 
         List<AirStats> lst = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            JSONObject jobj = (JSONObject) jsonarr.get(jsonarr.size() / 7 - 1);
-
+        for (int i = 0; i < 6; i++) {
+            int idx = i * 24;
+            JSONObject jobj = (JSONObject) jsonarr.get(idx);
+            
             int dt = ((Long) jobj.get("dt")).intValue();
-
+            
             int aqi = ((Long) ((JSONObject) jobj.get("main")).get("aqi")).intValue();
-
+            
             JSONObject components = (JSONObject) jobj.get("components");
             double pm10 = getValue("pm10", components);
             double co = getValue("co", components);
             double no2 = getValue("no2", components);
             double o3 = getValue("o3", components);
             double so2 = getValue("so2", components);
-
-            AirStats s = new AirStats(location, lat, lon, new Date(dt * (long) 1000), aqi);
+            
+            Date d = new Date(dt * (long) 1000);
+            AirStats s = new AirStats("", "", lat, lon, d, aqi);
             s.setValues(pm10, co, no2, o3, so2);
 
             lst.add(s);

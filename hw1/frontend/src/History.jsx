@@ -22,9 +22,6 @@ function History({ days }) {
                 <div id="item6" className="carousel-item">
                     <DayCard today={days[5]} values={days[5].values} />
                 </div>
-                <div id="item7" className="carousel-item">
-                    <DayCard today={days[6]} values={days[6].values} />
-                </div>
             </div>
             <div className="flex justify-center py-2 gap-2">
                 <a href="#item1" className="btn btn-xs">{days[0].date.substring(0, 10)}</a>
@@ -33,7 +30,6 @@ function History({ days }) {
                 <a href="#item4" className="btn btn-xs">{days[3].date.substring(0, 10)}</a>
                 <a href="#item5" className="btn btn-xs">{days[4].date.substring(0, 10)}</a>
                 <a href="#item6" className="btn btn-xs">{days[5].date.substring(0, 10)}</a>
-                <a href="#item7" className="btn btn-xs">{days[6].date.substring(0, 10)}</a>
             </div>
         </div>
     )

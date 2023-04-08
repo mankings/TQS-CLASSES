@@ -40,7 +40,7 @@ class AirControllerTest {
     
     @BeforeEach
     public void setup() {
-        dummyStats = new AirStats("coimbra", 50, 50, new Date(), 420);
+        dummyStats = new AirStats("Coimbra", "Coimbra", 50, 50, new Date(), 420);
         dummyStats.setValues(10, 20, 30, 40, 50);
     }
 
@@ -57,7 +57,7 @@ class AirControllerTest {
         mockMvc.perform(
             get("/api/candieira/today").content("application/json"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.location", is("coimbra")))
+            .andExpect(jsonPath("$.location", is("Coimbra")))
             .andExpect(jsonPath("$.values.co", is(20.0)))
             .andExpect(jsonPath("$.aqi", is(420)));
     }

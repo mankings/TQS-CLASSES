@@ -48,7 +48,7 @@ class OpenWeatherAdapterTest {
     @Test
     void forecast() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(weekResponse);
-        List<AirStats> statslst = adapter.forecast("coimbra", 40.0, -8);
+        List<AirStats> statslst = adapter.forecast(40.0, -8);
 
         assertThat(statslst).hasSize(4);
     }
@@ -56,7 +56,7 @@ class OpenWeatherAdapterTest {
     @Test
     void weekBadRequest() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(badResponse);
-        List<AirStats> statslst = adapter.forecast("coimbra", 140.0, -8);
+        List<AirStats> statslst = adapter.forecast(140.0, -8);
 
         assertThat(statslst).isEmpty();
     }
@@ -64,15 +64,15 @@ class OpenWeatherAdapterTest {
     @Test
     void history() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(historyResponse);
-        List<AirStats> statslst = adapter.history("coimbra", 40.0, -8);
+        List<AirStats> statslst = adapter.history(40.0, -8);
 
-        assertThat(statslst).hasSize(7);
+        assertThat(statslst).hasSize(6);
     }
 
     @Test
     void historyBadRequest() throws Exception {
         Mockito.when(httpClient.doGet(anyString(), any())).thenReturn(badResponse);
-        List<AirStats> statslst = adapter.history("coimbra", 140.0, -8);
+        List<AirStats> statslst = adapter.history(140.0, -8);
 
         assertThat(statslst).isEmpty();
     }

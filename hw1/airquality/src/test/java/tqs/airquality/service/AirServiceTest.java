@@ -50,19 +50,19 @@ class AirServiceTest {
 
     @BeforeEach
     public void setup() {
-        dummyStats = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
+        dummyStats = new AirStats("Coimbra", "Coimbra", 50.0, 50.0, new Date(), 12);
         dummyStats.setValues(15, 25, 35, 30, 40);
 
         dummyWeek = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
-            AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
+            AirStats s = new AirStats("Coimbra", "Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyWeek.add(s);
         }
 
         dummyHistory = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
-            AirStats s = new AirStats("Coimbra", 50.0, 50.0, new Date(), 12);
+            AirStats s = new AirStats("Coimbra", "Coimbra", 50.0, 50.0, new Date(), 12);
             s.setValues(i * 10, i * 10, i * 10, i * 10, i * 10);
             dummyHistory.add(s);
         }
@@ -91,7 +91,7 @@ class AirServiceTest {
     @Test
     void getForecastStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
-        Mockito.when(openWeatherAdapter.forecast(anyString(), anyDouble(), anyDouble())).thenReturn(dummyWeek);
+        Mockito.when(openWeatherAdapter.forecast(anyDouble(), anyDouble())).thenReturn(dummyWeek);
 
         List<AirStats> lst = service.forecast("Coimbra");
         assertThat(lst).hasSize(4);
@@ -103,13 +103,13 @@ class AirServiceTest {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
         assertThat(service.forecast("qwerty")).isEmpty();
-        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).forecast(anyString(), anyDouble(), anyDouble());
+        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).forecast(anyDouble(), anyDouble());
     }
 
     @Test
     void getHistoryStats() throws Exception {
         Mockito.when(aqicnAdapter.today("Coimbra")).thenReturn(dummyStats);
-        Mockito.when(openWeatherAdapter.history(anyString(), anyDouble(), anyDouble())).thenReturn(dummyHistory);
+        Mockito.when(openWeatherAdapter.history(anyDouble(), anyDouble())).thenReturn(dummyHistory);
 
         List<AirStats> lst = service.history("Coimbra");
         assertThat(lst).hasSize(7);
@@ -121,6 +121,6 @@ class AirServiceTest {
         Mockito.when(aqicnAdapter.today("qwerty")).thenReturn(null);
 
         assertThat(service.history("qwerty")).isEmpty();
-        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).history(anyString(), anyDouble(), anyDouble());
+        Mockito.verify(openWeatherAdapter, VerificationModeFactory.times(0)).history(anyDouble(), anyDouble());
     }
 }

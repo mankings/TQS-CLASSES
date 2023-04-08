@@ -8,6 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
+/*
+ * integration testing using rest assured to call the endpoints
+ */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class AirQualityIT {
 
@@ -54,35 +57,19 @@ public class AirQualityIT {
             .get(uri)
         .then()
             .statusCode(200)
-            .body("location", hasSize(7));
+            .body("location", hasSize(6));
     }
 
     @Test
-    void whenGetCacheStats_thenStatus200() {
+    void cacheStatsMatchTests() {
         String baseUri = "http://localhost:" + port + "/api/";
-        String uri;
-
-        // make 2 calls for the same city to populate cache
-        uri = baseUri + "London/today";
-        given()
-        .when()
-            .get(uri)
-        .then()
-            .statusCode(200);
-
-        given()
-        .when()
-            .get(uri)
-        .then()
-            .statusCode(200);
-
-        uri = baseUri + "cache";
+        String uri = baseUri + "cache";
         given()
         .when()
             .get(uri)
         .then()
             .statusCode(200)
-            .body("total", equalTo(2))
-            .body("hits", equalTo(1));
+            .body("total", equalTo(6))
+            .body("hits", equalTo(2));
     }
 }

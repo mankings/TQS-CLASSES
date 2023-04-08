@@ -53,9 +53,16 @@ public class AirService {
             logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - FETCHING", location);
             stats = aqicnAdapter.today(location);
             cacheTracker.requestTrack(false, new Date().getTime() - ts);
+            if (stats == null) return null;
+            
+            if (stats.missingValues()) {
+                AirStats s = openWeatherAdapter.today(stats.getLat(), stats.getLon());
+                stats.fill(s);
+            }
+
             cache.put(key, stats);
             return stats;
-        } 
+        }
         
         logger.log(Level.INFO, "[ SERVICE ] TODAY {0} - IN CACHE", location);
         stats = (AirStats) cacheresult.get();
@@ -76,7 +83,11 @@ public class AirService {
 
         if (cacheresult.isEmpty()) {
             logger.log(Level.INFO, "[ SERVICE ] WEEK {0} - FETCHING", location);
-            lst = openWeatherAdapter.forecast(location, s.getLat(), s.getLon());
+            lst = openWeatherAdapter.forecast(s.getLat(), s.getLon());
+            for (AirStats as : lst) {
+                as.setLocation(s.getLocation());
+                as.setKey(s.getKey());
+            }
             cacheTracker.requestTrack(false, new Date().getTime() - ts);
             cache.put(key, lst);
             return lst;
@@ -101,7 +112,11 @@ public class AirService {
 
         if (cacheresult.isEmpty()) {
             logger.log(Level.INFO, "[ SERVICE ] HISTORY {0} - FETCHING", location);
-            lst = openWeatherAdapter.history(location, s.getLat(), s.getLon());
+            lst = openWeatherAdapter.history(s.getLat(), s.getLon());
+            for (AirStats as : lst) {
+                as.setLocation(s.getLocation());
+                as.setKey(s.getKey());
+            }
             cacheTracker.requestTrack(false, new Date().getTime() - ts);
             cache.put(key, lst);
             return lst;

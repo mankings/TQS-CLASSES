@@ -33,8 +33,8 @@ public class AQICNAdapter {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public AirStats today(String location) throws URISyntaxException, ParseException, IOException {
-        String path = "feed/" + location + "/";
+    public AirStats today(String key) throws URISyntaxException, ParseException, IOException {
+        String path = "feed/" + key + "/";
         URIBuilder uriBuilder = new URIBuilder(APIURL + path);
         uriBuilder.addParameter("token", APIKEY);
         String uri = uriBuilder.build().toString();
@@ -52,7 +52,7 @@ public class AQICNAdapter {
             return null;
         }
 
-        int aqi = ((Long) data.get("aqi")).intValue();
+        int aqi = Math.round((Long) data.get("aqi") * 0.05f);
 
         JSONObject cityData = (JSONObject) data.get("city");
 
@@ -71,7 +71,7 @@ public class AQICNAdapter {
         double o3 = getValue("o3", todayData);
         double so2 = getValue("so2", todayData);
 
-        AirStats s = new AirStats(l, lat, lon, d, aqi);
+        AirStats s = new AirStats(key, l, lat, lon, d, aqi);
         s.setValues(pm10, co, no2, o3, so2);
         logger.log(Level.INFO, "[ AQICN_ADAPTER ] TODAY VALUES {0}", s);
         
