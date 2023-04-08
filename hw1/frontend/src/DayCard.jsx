@@ -1,4 +1,5 @@
 function DayCard({today, values}) {
+    const levels = ["Good", "Fair", "Moderate", "Poor", "Very Poor"]
     return (
         <div className="card w-96 bg-base-100 mx-auto">
           <div className="card-body items-center">
@@ -7,7 +8,7 @@ function DayCard({today, values}) {
             <tbody>
               <tr>
                 <td>AQI</td>
-                <td>{today.aqi}</td>
+                <td>{levels[today.aqi - 1]}</td>
               </tr>
               <tr>
                 <td>NO2</td>

@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import tqs.airquality.model.AirStats;
 import tqs.airquality.model.CacheStats;
 import tqs.airquality.service.AirService;
@@ -30,6 +34,11 @@ public class AirController {
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private String logstr = "[ CONTROLLER ] GET {0}";
 
+    @Operation(summary = "Get air quality stats for today at {location}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Air quality stats for today at {location}", content = @Content(mediaType = "application/json")),
+        @ApiResponse(responseCode = "404", description = "Location not found", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/{location}/today")
     public ResponseEntity<AirStats> today(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
         logger.log(Level.INFO, logstr, "/" + location + "/today");
@@ -45,6 +54,11 @@ public class AirController {
         return new ResponseEntity<>(stats, code);
     }
 
+    @Operation(summary = "Get air quality stats forecast at {location}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Air quality stats forecast at {location}", content = @Content(mediaType = "application/json")),
+        @ApiResponse(responseCode = "404", description = "Location not found", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/{location}/forecast")
     public ResponseEntity<List<AirStats>> forecast(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
         logger.log(Level.INFO, logstr, "/" + location + "/forecast");
@@ -61,6 +75,11 @@ public class AirController {
         return new ResponseEntity<>(weekStats, code);
     }
 
+    @Operation(summary = "Get air quality stats history at {location}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Air quality stats history at {location}", content = @Content(mediaType = "application/json")),
+        @ApiResponse(responseCode = "404", description = "Location not found", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/{location}/history")
     public ResponseEntity<List<AirStats>> history(@PathVariable(value = "location") String location) throws URISyntaxException, ParseException, IOException {
         logger.log(Level.INFO, logstr, "/" + location + "/history");
@@ -77,6 +96,10 @@ public class AirController {
         return new ResponseEntity<>(historyStats, code);
     }
 
+    @Operation(summary = "Get cache stats")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Returns cache total requests, hits, and average times", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/cache")
     public ResponseEntity<CacheStats> cache() {
         logger.log(Level.INFO, logstr, "/cache");
