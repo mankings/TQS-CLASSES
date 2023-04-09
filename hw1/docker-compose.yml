@@ -1,0 +1,13 @@
+version: "3.0"
+services:
+  api:
+    build: ./airquality
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    restart: on-failure

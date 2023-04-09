@@ -62,9 +62,9 @@ function App() {
             <h1 className="text-5xl font-bold">AirQuality by Mankings</h1>
             <input type="text" placeholder="Location" value={location} className="input input-bordered w-full max-w-xs my-4" onChange={(e) => setLocation(e.target.value)} />
             <div className="space-x-4">
-              <button className="btn btn-primary" onClick={() => getToday(location)}>Today</button>
-              <button className="btn btn-primary" onClick={() => getForecast(location)}>Forecast</button>
-              <button className="btn btn-primary" onClick={() => getHistory(location)}>History</button>
+              <button className="btn btn-primary" id="today" onClick={() => getToday(location)}>Today</button>
+              <button className="btn btn-primary" id="forecast" onClick={() => getForecast(location)}>Forecast</button>
+              <button className="btn btn-primary" id="history" onClick={() => getHistory(location)}>History</button>
             </div>
           </div>
         </div>
