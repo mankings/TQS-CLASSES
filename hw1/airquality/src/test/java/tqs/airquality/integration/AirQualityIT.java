@@ -12,7 +12,7 @@ import static org.springframework.boot.test.context.SpringBootTest.*;
  * integration testing using rest assured to call the endpoints
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class AirQualityIT {
+class AirQualityIT {
 
     @LocalServerPort
     private Integer port;
