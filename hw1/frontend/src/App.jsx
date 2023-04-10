@@ -9,11 +9,12 @@ import History from './History';
 function App() {
   const [show, setShow] = useState(0);
 
-  const [location, setLocation] = useState('Lisbon');
+  const [location, setLocation] = useState('');
 
   const [today, setToday] = useState({})
   const getToday = (location) => {
     const uri = 'http://localhost:8080/api/' + location + '/today'
+    setShow(-2)
     axios.get(uri).then((response) => {
       setToday(response.data)
       console.log(response.data)
@@ -21,12 +22,14 @@ function App() {
     }).catch((error) => {
       setToday(null)
       console.log(error)
+      setShow(-1)
     })
   }
 
   const [forecast, setForecast] = useState([])
   const getForecast = (location) => {
     const uri = 'http://localhost:8080/api/' + location + '/forecast'
+    setShow(-2)
     axios.get(uri).then((response) => {
       setForecast(response.data)
       console.log(response.data)
@@ -34,12 +37,14 @@ function App() {
     }).catch((error) => {
       setForecast([])
       console.log(error)
+      setShow(-1)
     })
   }
 
   const [history, setHistory] = useState([])
   const getHistory = (location) => {
     const uri = 'http://localhost:8080/api/' + location + '/history'
+    setShow(-2)
     axios.get(uri).then((response) => {
       setHistory(response.data)
       console.log(response.data)
@@ -47,11 +52,11 @@ function App() {
     }).catch((error) => {
       setHistory([])
       console.log(error)
+      setShow(-1)
     })
   }
 
   useEffect(() => {
-    getToday(location);
   }, [])
 
   return (
@@ -70,8 +75,16 @@ function App() {
         </div>
       </div>
 
+      {show == -2 && (
+        <div className='min-w-screen text-center'>loading...</div>
+      )}
+
+      {show == -1 && (
+        <div className='min-w-screen text-center'>Unavailable</div>
+      )}
+
       {show == 0 && today && today.values && (
-        <DayCard today={today} values={today.values} />
+        <DayCard today={today} />
       )}
 
       {show == 1 && forecast && forecast.length > 0 && (
@@ -81,6 +94,7 @@ function App() {
       {show == 2 && history && history.length > 0 && (
         <History days={history} />
       )}
+
     </div>
   )
 }
